@@ -2,15 +2,15 @@ import java.util.Stack;
 
 public class Hanoiturm 
 {
+    static Stack<Integer> towerA = new Stack<>();
+    static Stack<Integer> towerB = new Stack<>();
+    static Stack<Integer> towerC = new Stack<>();
 
     public static void main(String[] args) {
         // Anzahl der Scheiben
-        int n = 3;
+        int n = 5;
 
         // Die Türme als Arrays repräsentieren
-        Stack<Integer> towerA = new Stack<>();
-        Stack<Integer> towerB = new Stack<>();
-        Stack<Integer> towerC = new Stack<>();
 
         // Initialisierung des Turms A (Startturm)
         for (int i = n; i >= 1; i--) {
@@ -51,14 +51,14 @@ public class Hanoiturm
         int disk = from.pop();
         to.push(disk);
         System.out.println("Bewege Scheibe " + disk + " von " + fromName + " nach " + toName);
-        printTowers(from, to, aux); // Zeige den Zustand aller Türme
+        printTowers(towerA, towerB, towerC); // Zeige den Zustand aller Türme
     }
 
     // Methode zur Anzeige der Türme in jedem Schritt
-    public static void printTowers(Stack<Integer> towerA, Stack<Integer> towerB, Stack<Integer> towerC) {
-        System.out.println("Turm A: " + towerA);
-        System.out.println("Turm B: " + towerB);
-        System.out.println("Turm C: " + towerC);
+    public static void printTowers(Stack<Integer> TowerA, Stack<Integer> TowerB, Stack<Integer> TowerC) {
+        System.out.println("Turm A: " + TowerA);
+        System.out.println("Turm B: " + TowerB);
+        System.out.println("Turm C: " + TowerC);
         System.out.println();
     }
     
