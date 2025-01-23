@@ -1,4 +1,7 @@
 import javax.swing.*;
+
+import javafx.scene.layout.Border;
+
 import java.awt.*;
 import java.util.Stack;
 
@@ -10,9 +13,9 @@ public class HanoiturmGUI {
     static HanoiPanel hanoiPanel;
 
     public static void main(String[] args) {
-        int n = 5; // Anzahl der Scheiben
+        int n = 4; // Anzahl der Scheiben
 
-        // Türme initialisieren
+        // Türme erstellen
         for (int i = n; i >= 1; i--) {
             towerA.push(i);
         }
@@ -24,10 +27,19 @@ public class HanoiturmGUI {
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        JButton solveButton = new JButton("Lösen");
+        solveButton.addActionListener(e -> solveHanoi(n, towerA, towerC, towerB, "A", "C", "B"));
+        JPanel btnPanel = new JPanel(new BorderLayout());
+        btnPanel.setBackground(Color.GRAY);
+
+        btnPanel.add(solveButton, BorderLayout.NORTH);
+        frame.add(btnPanel, BorderLayout.NORTH);
 
         // Rekursiver Algorithmus
-        solveHanoi(n, towerA, towerC, towerB, "A", "C", "B");
+//        solveHanoi(n, towerA, towerC, towerB, "A", "C", "B");
     }
+
+
 
     public static void solveHanoi(int n, Stack<Integer> from, Stack<Integer> to, Stack<Integer> aux, String fromName, String toName, String auxName) {
         if (n == 1) {
@@ -44,6 +56,7 @@ public class HanoiturmGUI {
         int disk = from.pop();
         to.push(disk);
         System.out.println("Bewege Scheibe " + disk + " von " + fromName + " nach " + toName);
+        printTowers(towerA,towerB,towerC);
         updateGUI();
         try {
             Thread.sleep(500); // Animation verzögern
@@ -54,6 +67,13 @@ public class HanoiturmGUI {
 
     public static void updateGUI() {
         hanoiPanel.repaint();
+    }
+
+    public static void printTowers(Stack<Integer> TowerA, Stack<Integer> TowerB, Stack<Integer> TowerC) {
+        System.out.println("Turm A: " + TowerA);
+        System.out.println("Turm B: " + TowerB);
+        System.out.println("Turm C: " + TowerC);
+        System.out.println();
     }
 }
 
@@ -78,7 +98,6 @@ class HanoiPanel extends JPanel {
         int baseY = 400; // Grundlinie für die Türme
         int towerWidth = 20; // Breite eines Turms
         int towerHeight = 300; // Höhe eines Turms
-        int diskHeight = 20; // Höhe einer Scheibe
 
         // Türme zeichnen
         drawTower(g, baseX, baseY, towerWidth, towerHeight, towerA);
@@ -94,9 +113,9 @@ class HanoiPanel extends JPanel {
         // Scheiben zeichnen
         int offsetY = 0;
         for (int disk : tower) {
-            int diskWidth = disk * 30;
-            g.setColor(Color.BLUE);
-            g.fillRect(x - diskWidth / 2 + towerWidth / 2, y - offsetY - 20, diskWidth, 20);
+            int diskWidth = disk * 40;
+            g.setColor(Color.RED);
+            g.fillRect(x - diskWidth / 2 + towerWidth / 2 + 10, y - offsetY - 20, diskWidth, 20);
             offsetY += 20;
         }
     }
