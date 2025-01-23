@@ -1,58 +1,41 @@
-public class AchtDamenProblem {
-
-    boolean[][] feld = new boolean[8][8];
-
+public class EightQueens {
+    boolean[][] board = new boolean[8][8];
 
     public static void main(String[] args) {
-        AchtDamenProblem adp = new AchtDamenProblem();
-        adp.calculateField();
+        EightQueens eq = new EightQueens();
+
     }
 
-    public void calculateField(){
-        for (int x = 0; x < feld.length; x++) {
-            for(int y = 0; y < feld.length - 1; y++){
-                if (!otherFigureInReach(x, y)) {
-                    feld[x][y] = true;
-                    break;
-                }
-
-                this.printField();
-            }
+    public void solveBoard(int row){
+        int column = 0;
+        if (isSafe(row, column)) {
+            board[row][column] = true; 
         }
     }
 
-
-    public boolean otherFigureInReach(int x, int y){
-        int min = ;
-        int max = 0;
-
-        
-
-        if () {
-            
+    public boolean isSafe(int row, int col){
+        for (int i = 0; i < row; i++) {
+            if (board[i][col]) {
+                return false;
+            }
         }
-    }
 
-
-
-    public void printField(){
-        for (int x = 0; x < feld.length; x++) {
-            for(int y = 0; y < feld.length - 1; y++){
-                if (feld[x][y]) {
-                    System.out.print("x ");
-                }
-                else{
-                    System.out.print("o ");
+        for (int i = row; i >= 0; i--) {
+            for (int j = 0; j >= 0; j--) {
+                if (board[i][j]) {
+                    return false;
                 }
             }
-
-            if (feld[x][feld.length-1]) {
-                System.out.println("x");
-            }
-            else{
-                System.out.println("o");
-            }
-            
         }
+
+        for (int i = row; i >= 0; i--) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+
     }
 }
