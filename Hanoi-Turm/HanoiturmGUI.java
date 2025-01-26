@@ -1,9 +1,6 @@
-import javax.swing.*;
-
-import javafx.scene.layout.Border;
-
 import java.awt.*;
 import java.util.Stack;
+import javax.swing.*;
 
 public class HanoiturmGUI {
     static Stack<Integer> towerA = new Stack<>();
@@ -13,7 +10,7 @@ public class HanoiturmGUI {
     static HanoiPanel hanoiPanel;
 
     public static void main(String[] args) {
-        int n = 4; // Anzahl der Scheiben
+        int n = 3; // Anzahl der Scheiben
 
         // Türme erstellen
         for (int i = n; i >= 1; i--) {
@@ -27,19 +24,15 @@ public class HanoiturmGUI {
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        JButton solveButton = new JButton("Lösen");
-        solveButton.addActionListener(e -> solveHanoi(n, towerA, towerC, towerB, "A", "C", "B"));
-        JPanel btnPanel = new JPanel(new BorderLayout());
-        btnPanel.setBackground(Color.GRAY);
 
-        btnPanel.add(solveButton, BorderLayout.NORTH);
-        frame.add(btnPanel, BorderLayout.NORTH);
+        System.out.println("Startzustand:");
+        printTowers(towerA, towerB, towerC);
 
-        // Rekursiver Algorithmus
-//        solveHanoi(n, towerA, towerC, towerB, "A", "C", "B");
+        solveHanoi(n, towerA, towerC, towerB, "A", "C", "B");
+
+        System.out.println("Endzustand:");
+        printTowers(towerA, towerB, towerC);
     }
-
-
 
     public static void solveHanoi(int n, Stack<Integer> from, Stack<Integer> to, Stack<Integer> aux, String fromName, String toName, String auxName) {
         if (n == 1) {
@@ -58,10 +51,10 @@ public class HanoiturmGUI {
         System.out.println("Bewege Scheibe " + disk + " von " + fromName + " nach " + toName);
         printTowers(towerA,towerB,towerC);
         updateGUI();
+        hanoiPanel.updateTowers(towerA, towerB, towerC);
         try {
             Thread.sleep(500); // Animation verzögern
         } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
@@ -78,10 +71,10 @@ public class HanoiturmGUI {
 }
 
 class HanoiPanel extends JPanel {
-    private int numDisks;
     private Stack<Integer> towerA;
     private Stack<Integer> towerB;
     private Stack<Integer> towerC;
+    private int numDisks;
 
     public HanoiPanel(int numDisks, Stack<Integer> towerA, Stack<Integer> towerB, Stack<Integer> towerC) {
         this.numDisks = numDisks;
@@ -90,33 +83,52 @@ class HanoiPanel extends JPanel {
         this.towerC = towerC;
     }
 
+    public void updateTowers(Stack<Integer> towerA, Stack<Integer> towerB, Stack<Integer> towerC) {
+        this.towerA = towerA;
+        this.towerB = towerB;
+        this.towerC = towerC;
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
 
-        int baseX = 100; // Startposition des ersten Turms
-        int baseY = 400; // Grundlinie für die Türme
-        int towerWidth = 20; // Breite eines Turms
-        int towerHeight = 300; // Höhe eines Turms
+        int baseX = 150;
+        int baseY = 400;
+        int pegWidth = 10;
+        int pegHeight = 200;
 
         // Türme zeichnen
-        drawTower(g, baseX, baseY, towerWidth, towerHeight, towerA);
-        drawTower(g, baseX + 250, baseY, towerWidth, towerHeight, towerB);
-        drawTower(g, baseX + 500, baseY, towerWidth, towerHeight, towerC);
-    }
-
-    private void drawTower(Graphics g, int x, int y, int towerWidth, int towerHeight, Stack<Integer> tower) {
-        // Turm zeichnen
-        g.setColor(Color.BLACK);
-        g.fillRect(x + towerWidth / 2, y - towerHeight, towerWidth, towerHeight);
+        g2d.setColor(Color.DARK_GRAY);
+        g2d.fillRect(baseX, baseY - pegHeight, pegWidth, pegHeight); // Turm A
+        g2d.fillRect(baseX + 250, baseY - pegHeight, pegWidth, pegHeight); // Turm B
+        g2d.fillRect(baseX + 500, baseY - pegHeight, pegWidth, pegHeight); // Turm C
 
         // Scheiben zeichnen
-        int offsetY = 0;
-        for (int disk : tower) {
-            int diskWidth = disk * 40;
-            g.setColor(Color.RED);
-            g.fillRect(x - diskWidth / 2 + towerWidth / 2 + 10, y - offsetY - 20, diskWidth, 20);
-            offsetY += 20;
+        drawDisks(g2d, towerA, baseX, baseY);
+        drawDisks(g2d, towerB, baseX + 250, baseY);
+        drawDisks(g2d, towerC, baseX + 500, baseY);
+    }
+    
+    private void drawDisks(Graphics2D g2d, Stack<Integer> tower, int baseX, int baseY) {
+        int diskHeight = 20; // Höhe jeder Scheibe
+        int y = baseY; // Startpunkt an der Basis
+    
+        // Zeichnen von unten nach oben
+        for (int i = tower.size() - 1; i >= 0; i--) {
+            int diskWidth = tower.get(i) * 20; // Breite der Scheibe
+            int x = baseX - diskWidth / 2 + 5; // Zentrierung der Scheibe
+    
+            // Farbe der Scheibe basierend auf Größe
+            g2d.setColor(new Color(100 + tower.get(i) * 30, 50, 150));
+            g2d.fillRect(x, y - diskHeight, diskWidth, diskHeight); // Scheibe zeichnen
+            g2d.setColor(Color.BLACK);
+            g2d.drawRect(x, y - diskHeight, diskWidth, diskHeight); // Rahmen zeichnen
+    
+            y += diskHeight; // Nächste Scheibe höher platzieren
         }
     }
+    
 }

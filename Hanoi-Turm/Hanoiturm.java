@@ -6,7 +6,8 @@ public class Hanoiturm
     static Stack<Integer> towerB = new Stack<>();
     static Stack<Integer> towerC = new Stack<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         // Anzahl der Scheiben
         int n = 5;
 
@@ -28,9 +29,11 @@ public class Hanoiturm
     }
 
     // Rekursive Methode zur Lösung des Turms von Hanoi
-    public static void solveHanoi(int n, Stack<Integer> from, Stack<Integer> to, Stack<Integer> aux, String fromName, String toName, String auxName) {
+    public static void solveHanoi(int n, Stack<Integer> from, Stack<Integer> to, Stack<Integer> aux, String fromName, String toName, String auxName) 
+    {
         // Basisfall: Wenn nur eine Scheibe zu bewegen ist
-        if (n == 1) {
+        if (n == 1) 
+        {
             moveDisk(from, to, aux, fromName, toName);
             return;
         }
@@ -47,7 +50,8 @@ public class Hanoiturm
     }
 
     // Hilfsmethode zum Bewegen einer Scheibe von einem Turm zum anderen
-    public static void moveDisk(Stack<Integer> from, Stack<Integer> to, Stack<Integer> aux, String fromName, String toName) {
+    public static void moveDisk(Stack<Integer> from, Stack<Integer> to, Stack<Integer> aux, String fromName, String toName) 
+    {
         int disk = from.pop();
         to.push(disk);
         System.out.println("Bewege Scheibe " + disk + " von " + fromName + " nach " + toName);
@@ -55,7 +59,8 @@ public class Hanoiturm
     }
 
     // Methode zur Anzeige der Türme in jedem Schritt
-    public static void printTowers(Stack<Integer> TowerA, Stack<Integer> TowerB, Stack<Integer> TowerC) {
+    public static void printTowers(Stack<Integer> TowerA, Stack<Integer> TowerB, Stack<Integer> TowerC) 
+    {
         System.out.println("Turm A: " + TowerA);
         System.out.println("Turm B: " + TowerB);
         System.out.println("Turm C: " + TowerC);
