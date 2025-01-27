@@ -96,14 +96,14 @@ class HanoiPanel extends JPanel
 
         int baseX = 150;
         int baseY = 400;
-        int pegWidth = 10;
-        int pegHeight = 200;
+        int towerWidth = 10;
+        int towerHeight = 200;
 
         // Türme zeichnen
         g2d.setColor(Color.DARK_GRAY);
-        g2d.fillRect(baseX, baseY - pegHeight, pegWidth, pegHeight); // Turm A
-        g2d.fillRect(baseX + 250, baseY - pegHeight, pegWidth, pegHeight); // Turm B
-        g2d.fillRect(baseX + 500, baseY - pegHeight, pegWidth, pegHeight); // Turm C
+        g2d.fillRect(baseX, baseY - towerHeight, towerWidth, towerHeight); // Turm A
+        g2d.fillRect(baseX + 250, baseY - towerHeight, towerWidth, towerHeight); // Turm B
+        g2d.fillRect(baseX + 500, baseY - towerHeight, towerWidth, towerHeight); // Turm C
 
         // Scheiben zeichnen
         drawDisks(g2d, towerA, baseX, baseY);
@@ -124,7 +124,7 @@ class HanoiPanel extends JPanel
             int x = baseX - diskWidth / 2 + 5; // Zentrierung der Scheibe
     
             // Farbe der Scheibe basierend auf Größe
-            g2d.setColor(new Color(100 + tower.get(i) * 20, 50, 150));
+            g2d.setColor(new Color(100 + tower.get(i) * 15, 50, 150));
             g2d.fillRect(x, y - diskHeight, diskWidth, diskHeight); // Scheibe zeichnen
             g2d.setColor(Color.BLACK);
             g2d.drawRect(x, y - diskHeight, diskWidth, diskHeight); // Rahmen zeichnen
