@@ -1,4 +1,8 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+
+
+import java.awt.Color;
 
 public class EightQueens {
     boolean[][] board = new boolean[8][8];
@@ -8,12 +12,11 @@ public class EightQueens {
 
     JFrame frame = new JFrame();
 
-    
+    Border labelBorder = BorderFactory.createLineBorder(Color.BLACK, 2);
+
+    JLabel[][] boardUI = new JLabel[8][8];
 
     public static void main(String[] args) {
-
-        
-
 
         EightQueens eq = new EightQueens();
         eq.setUserInterface();
@@ -26,12 +29,37 @@ public class EightQueens {
 
     }
 
-
-    public void setUserInterface(){
+    public void setUserInterface() {
         frame.setSize(800, 800);
         frame.setVisible(true);
-        
-        
+        frame.setTitle("EightQueens");
+        frame.setLayout(null);
+
+        for (int x = 0; x < boardUI.length; x++) {
+
+            for (int y = 0; y < boardUI.length; y++) {
+                boardUI[x][y] = new JLabel();
+                frame.add(boardUI[x][y]);
+                boardUI[x][y].setText(board[x][y] ? "x" : "");
+                // boardUI[x][y].setSize(40, 40);
+                boardUI[x][y].setBounds(40 * x + 100, 40 * y + 100, 40, 40);
+                boardUI[x][y].setBorder(labelBorder);
+                boardUI[x][y].setVisible(true);
+            }
+
+        }
+
+    }
+
+    public void updateUI() {
+        for (int x = 0; x < boardUI.length; x++) {
+
+            for (int y = 0; y < boardUI.length; y++) {
+                boardUI[x][y].setText(board[x][y] ? "x" : "");
+            }
+
+        }
+
     }
 
     public boolean solveBoard(int row) {
@@ -43,7 +71,8 @@ public class EightQueens {
             if (isSafe(row, col)) {
                 board[row][col] = true;
                 currentQueens++;
-                if(solveBoard(row + 1)) {
+                if (solveBoard(row + 1)) {
+                    updateUI();
                     return true;
                 }
                 board[row][col] = false;
@@ -51,6 +80,7 @@ public class EightQueens {
             }
         }
 
+        updateUI();
         return false;
 
     }
@@ -63,24 +93,23 @@ public class EightQueens {
                 return false;
             }
         }
-    
+
         // Überprüfung der linken oberen Diagonale
         for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
             if (board[i][j]) {
                 return false;
             }
         }
-    
+
         // Überprüfung der rechten oberen Diagonale
         for (int i = row, j = col; i >= 0 && j < board.length; i--, j++) {
             if (board[i][j]) {
                 return false;
             }
         }
-    
+
         return true;
     }
-    
 
     public void printBoard() {
 
