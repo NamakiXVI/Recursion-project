@@ -2,18 +2,21 @@ import java.awt.*;
 import java.util.Stack;
 import javax.swing.*;
 
-public class HanoiturmGUI {
+public class HanoiturmGUI 
+{
     static Stack<Integer> towerA = new Stack<>();
     static Stack<Integer> towerB = new Stack<>();
     static Stack<Integer> towerC = new Stack<>();
 
     static HanoiPanel hanoiPanel;
 
-    public static void main(String[] args) {
-        int n = 3; // Anzahl der Scheiben
+    public static void main(String[] args) 
+    {
+        int n = 5; // Anzahl der Scheiben
 
         // Türme erstellen
-        for (int i = n; i >= 1; i--) {
+        for (int i = n; i >= 1; i--) 
+        {
             towerA.push(i);
         }
 
@@ -34,8 +37,10 @@ public class HanoiturmGUI {
         printTowers(towerA, towerB, towerC);
     }
 
-    public static void solveHanoi(int n, Stack<Integer> from, Stack<Integer> to, Stack<Integer> aux, String fromName, String toName, String auxName) {
-        if (n == 1) {
+    public static void solveHanoi(int n, Stack<Integer> from, Stack<Integer> to, Stack<Integer> aux, String fromName, String toName, String auxName) 
+    {
+        if (n == 1) 
+        {
             moveDisk(from, to, fromName, toName);
             return;
         }
@@ -45,24 +50,22 @@ public class HanoiturmGUI {
         solveHanoi(n - 1, aux, to, from, auxName, toName, fromName);
     }
 
-    public static void moveDisk(Stack<Integer> from, Stack<Integer> to, String fromName, String toName) {
+    public static void moveDisk(Stack<Integer> from, Stack<Integer> to, String fromName, String toName) 
+    {
         int disk = from.pop();
         to.push(disk);
         System.out.println("Bewege Scheibe " + disk + " von " + fromName + " nach " + toName);
         printTowers(towerA,towerB,towerC);
-        updateGUI();
-        hanoiPanel.updateTowers(towerA, towerB, towerC);
-        try {
+        hanoiPanel.repaint();
+        try 
+        {
             Thread.sleep(500); // Animation verzögern
         } catch (InterruptedException e) {
         }
     }
 
-    public static void updateGUI() {
-        hanoiPanel.repaint();
-    }
-
-    public static void printTowers(Stack<Integer> TowerA, Stack<Integer> TowerB, Stack<Integer> TowerC) {
+    public static void printTowers(Stack<Integer> TowerA, Stack<Integer> TowerB, Stack<Integer> TowerC) 
+    {
         System.out.println("Turm A: " + TowerA);
         System.out.println("Turm B: " + TowerB);
         System.out.println("Turm C: " + TowerC);
@@ -70,28 +73,24 @@ public class HanoiturmGUI {
     }
 }
 
-class HanoiPanel extends JPanel {
+class HanoiPanel extends JPanel 
+{
+    private int numDisks;
     private Stack<Integer> towerA;
     private Stack<Integer> towerB;
     private Stack<Integer> towerC;
-    private int numDisks;
 
-    public HanoiPanel(int numDisks, Stack<Integer> towerA, Stack<Integer> towerB, Stack<Integer> towerC) {
+    public HanoiPanel(int numDisks, Stack<Integer> towerA, Stack<Integer> towerB, Stack<Integer> towerC) 
+    {
         this.numDisks = numDisks;
         this.towerA = towerA;
         this.towerB = towerB;
         this.towerC = towerC;
     }
 
-    public void updateTowers(Stack<Integer> towerA, Stack<Integer> towerB, Stack<Integer> towerC) {
-        this.towerA = towerA;
-        this.towerB = towerB;
-        this.towerC = towerC;
-        repaint();
-    }
-
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) 
+    {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
@@ -108,27 +107,29 @@ class HanoiPanel extends JPanel {
 
         // Scheiben zeichnen
         drawDisks(g2d, towerA, baseX, baseY);
-        drawDisks(g2d, towerB, baseX + 250, baseY);
-        drawDisks(g2d, towerC, baseX + 500, baseY);
+        drawDisks(g2d, towerB, baseX + 250, baseY - 1);
+        drawDisks(g2d, towerC, baseX + 500, baseY - 1);
     }
     
-    private void drawDisks(Graphics2D g2d, Stack<Integer> tower, int baseX, int baseY) {
+    private void drawDisks(Graphics2D g2d, Stack<Integer> tower, int baseX, int baseY) 
+    {
         int diskHeight = 20; // Höhe jeder Scheibe
         int y = baseY; // Startpunkt an der Basis
-    
+        
+        System.out.println(tower.size());
         // Zeichnen von unten nach oben
-        for (int i = tower.size() - 1; i >= 0; i--) {
+        for (int i = 0; i < tower.size(); i++) 
+        {
             int diskWidth = tower.get(i) * 20; // Breite der Scheibe
             int x = baseX - diskWidth / 2 + 5; // Zentrierung der Scheibe
     
             // Farbe der Scheibe basierend auf Größe
-            g2d.setColor(new Color(100 + tower.get(i) * 30, 50, 150));
+            g2d.setColor(new Color(100 + tower.get(i) * 20, 50, 150));
             g2d.fillRect(x, y - diskHeight, diskWidth, diskHeight); // Scheibe zeichnen
             g2d.setColor(Color.BLACK);
             g2d.drawRect(x, y - diskHeight, diskWidth, diskHeight); // Rahmen zeichnen
     
-            y += diskHeight; // Nächste Scheibe höher platzieren
+            y -= diskHeight; // Nächste Scheibe höher platzieren
         }
-    }
-    
+    }   
 }
