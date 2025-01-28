@@ -6,9 +6,14 @@ import java.awt.Image;
 import java.util.concurrent.TimeUnit;
 
 public class EightQueens {
-    boolean[][] board = new boolean[8][8];
 
-    int targetQueens = 8;
+    int boardSize = 12; // Größe des Feldes
+
+    int delay = 10; // verzögerung der einzelnen Schritte in Millisekunden
+
+    boolean[][] board = new boolean[boardSize][boardSize];
+
+    int targetQueens = boardSize;
     int currentQueens = 0;
 
     int fieldSize = 70;
@@ -19,7 +24,7 @@ public class EightQueens {
 
     Border labelBorder = BorderFactory.createLineBorder(Color.BLACK, 2);
 
-    JLabel[][] boardUI = new JLabel[8][8];
+    JLabel[][] boardUI = new JLabel[boardSize][boardSize];
 
     public static void main(String[] args) {
 
@@ -37,11 +42,12 @@ public class EightQueens {
     public void setUserInterface() {
         Image image = queen.getImage().getScaledInstance(fieldSize, fieldSize, java.awt.Image.SCALE_SMOOTH);
         queen = new ImageIcon(image);
-        frame.setSize(800, 800);
+        frame.setSize(1000, 1000);
         frame.setVisible(true);
         frame.setTitle("EightQueens");
         frame.setLayout(null);
         frame.setIconImage(image);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         for (int x = 0; x < boardUI.length; x++) {
 
@@ -61,7 +67,7 @@ public class EightQueens {
 
     public void updateUI() {
         try {
-            TimeUnit.MILLISECONDS.sleep(10);
+            TimeUnit.MILLISECONDS.sleep(delay);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -126,15 +132,15 @@ public class EightQueens {
 
     public void printBoard() {
 
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 7; y++) {
+        for (int x = 0; x < boardSize; x++) {
+            for (int y = 0; y < boardSize - 1; y++) {
                 if (board[x][y]) {
                     System.out.print("x ");
                 } else {
                     System.out.print("o ");
                 }
             }
-            if (board[x][7]) {
+            if (board[x][boardSize - 1]) {
                 System.out.println("x");
             } else {
                 System.out.println("o");
