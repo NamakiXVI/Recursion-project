@@ -16,7 +16,7 @@ public class HanoiturmGUI
     // Hauptmethode
     public static void main(String[] args) 
     {
-        int n = 5; // Anzahl der Scheiben (kann angepasst werden)
+        int n = 15; // Anzahl der Scheiben (kann angepasst werden)
 
         // Initialisiert den ersten Turm (Turm A) mit Scheiben
         for (int i = n; i >= 1; i--) 
@@ -28,7 +28,7 @@ public class HanoiturmGUI
         JFrame frame = new JFrame("Turm von Hanoi"); // Fenster mit Titel
         hanoiPanel = new HanoiPanel(n, towerA, towerB, towerC); // Initialisiert das Panel
         frame.add(hanoiPanel); // Fügt das Panel zum Fenster hinzu
-        frame.setSize(800, 600); // Setzt die Fenstergröße
+        frame.setSize(1200, 800); // Setzt die Fenstergröße
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Beendet Programm bei Fenster-Schließen
         frame.setVisible(true); // Macht das Fenster sichtbar
 
@@ -62,6 +62,15 @@ public class HanoiturmGUI
     // Verschiebt eine Scheibe von einem Turm zum anderen
     public static void moveDisk(Stack<Integer> from, Stack<Integer> to, String fromName, String toName) 
     {
+        try 
+        {
+            Thread.sleep(10); // Verzögert die Animation um 500 Millisekunden
+        } 
+        catch (InterruptedException e) 
+        {
+            // Ausnahmebehandlung (falls der Thread unterbrochen wird)
+        }
+
         int disk = from.pop(); // Entfernt die oberste Scheibe vom Quell-Turm
         to.push(disk); // Legt die Scheibe auf den Ziel-Turm
 
@@ -72,14 +81,6 @@ public class HanoiturmGUI
         printTowers(towerA, towerB, towerC); // Druckt den aktuellen Zustand der Türme
         hanoiPanel.repaint(); // Zeichnet das Panel neu
 
-        try 
-        {
-            Thread.sleep(500); // Verzögert die Animation um 500 Millisekunden
-        } 
-        catch (InterruptedException e) 
-        {
-            // Ausnahmebehandlung (falls der Thread unterbrochen wird)
-        }
     }
 
     // Druckt den Zustand der Türme in die Konsole
@@ -117,10 +118,10 @@ class HanoiPanel extends JPanel
         Graphics2D g2d = (Graphics2D) g;
 
         // Grundpositionen und Größen für Türme und Scheiben
-        int baseX = 150; // Abstand vom linken Rand
-        int baseY = 400; // Basislinie (unten)
+        int baseX = 200; // Abstand vom linken Rand
+        int baseY = 500; // Basislinie (unten)
         int towerWidth = 10; // Breite der Türme
-        int towerHeight = 200; // Höhe der Türme
+        int towerHeight = 300; // Höhe der Türme
 
         // Zeichnet die drei Türme
         g2d.setColor(Color.DARK_GRAY);
@@ -143,11 +144,11 @@ class HanoiPanel extends JPanel
         // Zeichnet die Scheiben von unten nach oben
         for (int i = 0; i < tower.size(); i++) 
         {
-            int diskWidth = tower.get(i) * 20; // Breite der Scheibe (abhängig von Größe)
+            int diskWidth = tower.get(i) * 15; // Breite der Scheibe (abhängig von Größe)
             int x = baseX - diskWidth / 2 + 5; // Zentriert die Scheibe
 
             // Farbe basierend auf der Größe
-            g2d.setColor(new Color(100 + tower.get(i) * 15, 50, 150));
+            g2d.setColor(new Color(100 + tower.get(i) * 10, 50, 150));
             g2d.fillRect(x, y - diskHeight, diskWidth, diskHeight); // Füllt die Scheibe
             g2d.setColor(Color.BLACK);
             g2d.drawRect(x, y - diskHeight, diskWidth, diskHeight); // Zeichnet einen Rahmen

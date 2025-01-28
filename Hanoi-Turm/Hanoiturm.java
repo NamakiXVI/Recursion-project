@@ -38,7 +38,7 @@ public class Hanoiturm
             return;
         }
 
-        // Rekursiver Schritt:
+        // Rekursive Schritte:
         // 1. Bewege die oberen n-1 Scheiben vom Startturm zum Hilfsturm
         solveHanoi(n - 1, from, aux, to, fromName, auxName, toName);
 
