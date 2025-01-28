@@ -1,14 +1,19 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 
-
 import java.awt.Color;
+import java.awt.Image;
+import java.util.concurrent.TimeUnit;
 
 public class EightQueens {
     boolean[][] board = new boolean[8][8];
 
     int targetQueens = 8;
     int currentQueens = 0;
+
+    int fieldSize = 70;
+
+    ImageIcon queen = new ImageIcon("3399_black-queen.png");
 
     JFrame frame = new JFrame();
 
@@ -30,32 +35,40 @@ public class EightQueens {
     }
 
     public void setUserInterface() {
+        Image image = queen.getImage().getScaledInstance(fieldSize, fieldSize, java.awt.Image.SCALE_SMOOTH);
+        queen = new ImageIcon(image);
         frame.setSize(800, 800);
         frame.setVisible(true);
         frame.setTitle("EightQueens");
         frame.setLayout(null);
+        frame.setIconImage(image);
 
         for (int x = 0; x < boardUI.length; x++) {
 
             for (int y = 0; y < boardUI.length; y++) {
                 boardUI[x][y] = new JLabel();
                 frame.add(boardUI[x][y]);
-                boardUI[x][y].setText(board[x][y] ? "x" : "");
+                boardUI[x][y].setHorizontalAlignment(SwingConstants.CENTER);
+                boardUI[x][y].setIcon(board[x][y] ? queen : null);
                 // boardUI[x][y].setSize(40, 40);
-                boardUI[x][y].setBounds(40 * x + 100, 40 * y + 100, 40, 40);
+                boardUI[x][y].setBounds(fieldSize * x + 100, fieldSize * y + 100, fieldSize, fieldSize);
                 boardUI[x][y].setBorder(labelBorder);
                 boardUI[x][y].setVisible(true);
             }
 
         }
-
     }
 
     public void updateUI() {
+        try {
+            TimeUnit.MILLISECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         for (int x = 0; x < boardUI.length; x++) {
 
             for (int y = 0; y < boardUI.length; y++) {
-                boardUI[x][y].setText(board[x][y] ? "x" : "");
+                boardUI[x][y].setIcon(board[x][y] ? queen : null);
             }
 
         }
@@ -71,6 +84,7 @@ public class EightQueens {
             if (isSafe(row, col)) {
                 board[row][col] = true;
                 currentQueens++;
+                updateUI();
                 if (solveBoard(row + 1)) {
                     updateUI();
                     return true;
@@ -79,7 +93,6 @@ public class EightQueens {
                 currentQueens--;
             }
         }
-
         updateUI();
         return false;
 
