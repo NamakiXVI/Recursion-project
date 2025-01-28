@@ -141,7 +141,7 @@ class HanoiPanel extends JPanel
         int y = baseY; // Startpunkt an der Basis
 
         // Zeichnet die Scheiben von unten nach oben
-        for (int i = tower.size() - 1; i >= 0; i--) 
+        for (int i = 0; i < tower.size(); i++) 
         {
             int diskWidth = tower.get(i) * 20; // Breite der Scheibe (abhängig von Größe)
             int x = baseX - diskWidth / 2 + 5; // Zentriert die Scheibe
