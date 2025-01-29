@@ -5,31 +5,23 @@ from PIL import Image
 
 #die Größe des Feldes wird festgelegt
 boardSize = 8
-
 board = [[False for i in range(0, boardSize)] for i in range(0, boardSize)]
-
 targetQueens = boardSize
-
 currentQueens = 0
 
 primaryColor = "#418BCA"
-
 secondaryColor = "#EAF4FE"
 
 fieldSize = 80
-
 screenSize = (fieldSize + 5) * boardSize + 100
 
 root = ctk.CTk()
 root.configure(width=screenSize, height=screenSize)
-
 root.resizable(False, False)
 
 uiFields = [[ctk.CTkLabel(master=root, width=fieldSize, height=fieldSize, text="", fg_color=primaryColor if i % 2 else "black", corner_radius=5) for i in range(0, boardSize)]
             for i in range(0, boardSize)]
-
 queenImage = ctk.CTkImage(Image.open("queen.png"), size=(fieldSize - 10, fieldSize - 10))
-
 
 def setUserInterface():
     currentColor = primaryColor

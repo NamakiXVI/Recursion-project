@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from customtkinter import *
 import time
 from threading import Thread
 
@@ -14,17 +15,22 @@ class Main(ctk.CTk):
     
     def create_home_screen(self):
         self.clear_window()
-        title = ctk.CTkLabel(self, text="Turm von Hanoi", font=("San Francisco", 48, "bold"), text_color="white")
+        title = ctk.CTkLabel(self, text="Algorithmus Visualisierung", font=("San Francisco", 48, "bold"), text_color="white")
         title.pack(pady=50)
         
         button_frame = ctk.CTkFrame(self, fg_color="transparent")
-        button_frame.pack(pady=50)
+        button_frame.pack(pady=50, padx=20, anchor="w")
         
-        start_button = ctk.CTkButton(button_frame, text="Start", command=self.Hanoi_frame, corner_radius=10, font=("San Francisco", 18))
-        exit_button = ctk.CTkButton(button_frame, text="Beenden", command=self.quit, corner_radius=10, font=("San Francisco", 18))
+        hanoi_button = ctk.CTkButton(button_frame, text="Turm von Hanoi", command=self.Hanoi_frame, corner_radius=100, font=ctk.CTkFont("San Francisco", 28, underline=True, weight="bold"), bg_color="transparent", fg_color="transparent")
+        eight_queen_button = ctk.CTkButton(button_frame, text="8 Damen Problem", command=self.EightQueen_frame, corner_radius=100, font=ctk.CTkFont("San Francisco", 28, underline=True, weight="bold"), bg_color="transparent", fg_color="transparent")
+        exit_button = ctk.CTkButton(button_frame, text="Beenden", command=self.quit, corner_radius=100, font=ctk.CTkFont("San Francisco", 28, underline=True, weight="bold"), bg_color="transparent", fg_color="transparent")
         
-        start_button.pack(side="left", padx=20, ipadx=20, ipady=10)
-        exit_button.pack(side="left", padx=20, ipadx=20, ipady=10)
+        hanoi_button.pack(fill="x", anchor="w", pady=10, ipadx=0, ipady=10)
+        eight_queen_button.pack(fill="x", anchor="w", pady=10, ipadx=0, ipady=10)
+        exit_button.pack(fill="x", anchor="w", pady=10, ipadx=0, ipady=10)
+
+    def EightQueen_frame(self):
+        return 0
     
     def Hanoi_frame(self):
         self.clear_window()
