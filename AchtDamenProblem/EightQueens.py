@@ -48,8 +48,6 @@ def setUserInterface():
         else:
             currentColor = primaryColor
 
-    updateUserInterface()
-
 
 def solveBoard(row):
     global currentQueens
@@ -61,7 +59,7 @@ def solveBoard(row):
     for col in range(0, boardSize):
         if isSafe(row, col):
             board[row][col] = True
-            currentQueens += 1 
+            currentQueens += 1
             if solveBoard(row + 1): #Stack wird aufgebaut
                 return True
             board[row][col] = False
