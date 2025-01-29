@@ -2,7 +2,7 @@ import customtkinter as ctk
 import time
 from threading import Thread
 
-class HanoiGUI(ctk.CTk):
+class Main(ctk.CTk):
     def __init__(self):
         super().__init__()
         ctk.set_appearance_mode("dark")
@@ -20,13 +20,13 @@ class HanoiGUI(ctk.CTk):
         button_frame = ctk.CTkFrame(self, fg_color="transparent")
         button_frame.pack(pady=50)
         
-        start_button = ctk.CTkButton(button_frame, text="Start", command=self.show_main_frame, corner_radius=10, font=("San Francisco", 18))
+        start_button = ctk.CTkButton(button_frame, text="Start", command=self.Hanoi_frame, corner_radius=10, font=("San Francisco", 18))
         exit_button = ctk.CTkButton(button_frame, text="Beenden", command=self.quit, corner_radius=10, font=("San Francisco", 18))
         
         start_button.pack(side="left", padx=20, ipadx=20, ipady=10)
         exit_button.pack(side="left", padx=20, ipadx=20, ipady=10)
     
-    def show_main_frame(self):
+    def Hanoi_frame(self):
         self.clear_window()
         
         self.towers = {"A": [], "B": [], "C": []}
@@ -98,5 +98,5 @@ class HanoiGUI(ctk.CTk):
             widget.destroy()
 
 if __name__ == "__main__":
-    app = HanoiGUI()
+    app = Main()
     app.mainloop()
