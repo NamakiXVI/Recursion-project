@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class EightQueens {
 
-    int boardSize = 12; // Größe des Feldes
+    int boardSize = 8; // Größe des Feldes
 
     int delay = 10; // verzögerung der einzelnen Schritte in Millisekunden
 
@@ -18,7 +18,7 @@ public class EightQueens {
 
     int fieldSize = 70;
 
-    ImageIcon queen = new ImageIcon("3399_black-queen.png");
+    ImageIcon queen = new ImageIcon("queen.png");
 
     JFrame frame = new JFrame();
 
@@ -42,7 +42,7 @@ public class EightQueens {
     public void setUserInterface() {
         Image image = queen.getImage().getScaledInstance(fieldSize, fieldSize, java.awt.Image.SCALE_SMOOTH);
         queen = new ImageIcon(image);
-        frame.setSize(1000, 1000);
+        frame.setSize(boardSize*fieldSize + 100, boardSize*fieldSize + 100);
         frame.setVisible(true);
         frame.setTitle("EightQueens");
         frame.setLayout(null);
@@ -57,7 +57,7 @@ public class EightQueens {
                 boardUI[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                 boardUI[x][y].setIcon(board[x][y] ? queen : null);
                 // boardUI[x][y].setSize(40, 40);
-                boardUI[x][y].setBounds(fieldSize * x + 100, fieldSize * y + 100, fieldSize, fieldSize);
+                boardUI[x][y].setBounds(fieldSize * x + 50, fieldSize * y + 50, fieldSize, fieldSize);
                 boardUI[x][y].setBorder(labelBorder);
                 boardUI[x][y].setVisible(true);
             }
