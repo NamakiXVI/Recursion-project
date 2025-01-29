@@ -93,67 +93,64 @@ public class HanoiturmGUI
     }
 }
 
-// Klasse zur Darstellung der Türme und Scheiben im GUI
-class HanoiPanel extends JPanel 
-{
-    private int numDisks; // Anzahl der Scheiben
-    private Stack<Integer> towerA; // Referenz auf Turm A
-    private Stack<Integer> towerB; // Referenz auf Turm B
-    private Stack<Integer> towerC; // Referenz auf Turm C
+class HanoiPanel extends JPanel {
 
-    // Konstruktor
-    public HanoiPanel(int numDisks, Stack<Integer> towerA, Stack<Integer> towerB, Stack<Integer> towerC) 
-    {
-        this.numDisks = numDisks;
-        this.towerA = towerA;
-        this.towerB = towerB;
-        this.towerC = towerC;
+    // Referenzen auf die Türme
+    private Stack<Integer> towerA;
+    private Stack<Integer> towerB;
+    private Stack<Integer> towerC;
+
+    // Konstruktor - Initialisiert das Panel mit den Türmen
+    public HanoiPanel(int numDisks, Stack<Integer> towerA, Stack<Integer> towerB, Stack<Integer> towerC) {
+        this.towerA = towerA; // Turm A
+        this.towerB = towerB; // Turm B
+        this.towerC = towerC; // Turm C
     }
 
-    // Zeichnet das Panel
+    // Zeichnet das Panel, einschließlich der Türme und Scheiben
     @Override
-    protected void paintComponent(Graphics g) 
-    {
-        super.paintComponent(g); // Ruft die Standard-Zeichenlogik auf
-        Graphics2D g2d = (Graphics2D) g;
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g); // Standard-Zeichenlogik aufrufen
 
-        // Grundpositionen und Größen für Türme und Scheiben
-        int baseX = 200; // Abstand vom linken Rand
-        int baseY = 500; // Basislinie (unten)
-        int towerWidth = 10; // Breite der Türme
-        int towerHeight = 300; // Höhe der Türme
+        // Grundpositionen für die Türme
+        int baseX = 200; // X-Position des ersten Turms
+        int baseY = 500; // Y-Position der Basis
 
-        // Zeichnet die drei Türme
-        g2d.setColor(Color.DARK_GRAY);
-        g2d.fillRect(baseX, baseY - towerHeight, towerWidth, towerHeight); // Turm A
-        g2d.fillRect(baseX + 250, baseY - towerHeight, towerWidth, towerHeight); // Turm B
-        g2d.fillRect(baseX + 500, baseY - towerHeight, towerWidth, towerHeight); // Turm C
+        // Türme zeichnen
+        drawTower(g, baseX); // Turm A
+        drawTower(g, baseX + 400); // Turm B
+        drawTower(g, baseX + 800); // Turm C
 
-        // Zeichnet die Scheiben
-        drawDisks(g2d, towerA, baseX, baseY); // Scheiben von Turm A
-        drawDisks(g2d, towerB, baseX + 250, baseY); // Scheiben von Turm B
-        drawDisks(g2d, towerC, baseX + 500, baseY); // Scheiben von Turm C
+        // Scheiben zeichnen
+        drawDisks(g, towerA, baseX, baseY); // Scheiben von Turm A
+        drawDisks(g, towerB, baseX + 400, baseY); // Scheiben von Turm B
+        drawDisks(g, towerC, baseX + 800, baseY); // Scheiben von Turm C
+    }
+
+    // Zeichnet einen einzelnen Turm
+    private void drawTower(Graphics g, int x) {
+        g.setColor(Color.DARK_GRAY); // Farbe des Turms
+        g.fillRect(x - 5, 200, 10, 300); // Turm als Rechteck zeichnen
     }
 
     // Zeichnet die Scheiben eines Turms
-    private void drawDisks(Graphics2D g2d, Stack<Integer> tower, int baseX, int baseY) 
-    {
+    private void drawDisks(Graphics g, Stack<Integer> tower, int baseX, int baseY) {
         int diskHeight = 20; // Höhe jeder Scheibe
-        int y = baseY; // Startpunkt an der Basis
 
-        // Zeichnet die Scheiben von unten nach oben
-        for (int i = 0; i < tower.size(); i++) 
-        {
-            int diskWidth = tower.get(i) * 15; // Breite der Scheibe (abhängig von Größe)
-            int x = baseX - diskWidth / 2 + 5; // Zentriert die Scheibe
+        // Iteriert durch die Scheiben des Turms
+        for (int i = 0; i < tower.size(); i++) {
+            int disk = tower.get(i); // Größe der aktuellen Scheibe
 
-            // Farbe basierend auf der Größe
-            g2d.setColor(new Color(100 + tower.get(i) * 10, 50, 150));
-            g2d.fillRect(x, y - diskHeight, diskWidth, diskHeight); // Füllt die Scheibe
-            g2d.setColor(Color.BLACK);
-            g2d.drawRect(x, y - diskHeight, diskWidth, diskHeight); // Zeichnet einen Rahmen
+            // Bestimmt die Breite einer Scheibe basierend auf ihrer Größe (Größe multipliziert mit 20)
+            int diskWidth = disk * 20;
+            
+            int x = baseX - diskWidth / 2; // Zentriert die Scheibe horizontal auf dem Turm
+            int y = baseY - ((i + 1) * diskHeight); // Berechnet die vertikale Position der Scheibe
 
-            y -= diskHeight; // Setzt die nächste Scheibe höher
+            g.setColor(new Color(100 + disk * 10, 50, 150)); // Farbe der Scheibe basierend auf ihrer Größe
+            g.fillRect(x, y, diskWidth, diskHeight); // Zeichnet die gefüllte Scheibe
+            g.setColor(Color.BLACK); // Farbe für den Rand der Scheibe
+            g.drawRect(x, y, diskWidth, diskHeight); // Zeichnet den Rand der Scheibe
         }
-    }   
+    }
 }
