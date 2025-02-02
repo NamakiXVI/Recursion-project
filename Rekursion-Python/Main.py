@@ -16,7 +16,7 @@ class Main(ctk.CTk):  # definiert die hauptklasse der anwendung die von ctk.CTk 
     
     def create_home_screen(self):  # methode zum erstellen des startbildschirms
         self.clear_window()  # löscht alle widgets im fenster
-        title = ctk.CTkLabel(self, text="Algorithmus Visualisierung", font=("San Francisco", 48, "bold"), text_color="white")  # erstellt ein label mit dem titel
+        title = ctk.CTkLabel(self, text="Rekursions Projekte", font=("San Francisco", 48, "bold"), text_color="white")  # erstellt ein label mit dem titel
         title.pack(pady=50)  # platziert das label im fenster mit abstand nach oben und unten
         
         button_frame = ctk.CTkFrame(self, fg_color="transparent")  # erstellt einen transparenten rahmen für die buttons
