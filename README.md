@@ -86,7 +86,7 @@ Das Projekt ist auf GitHub verfügbar: [Recursion Project Repository](https://gi
 1. Stelle sicher, dass Python installiert ist (Version 3.7 oder höher).
 2. Installiere die benötigten Bibliotheken:
    ```bash
-   pip install customtkinter pillow
+   pip install customtkinter
    ```
 3. Navigiere zum gewünschten Verzeichnis (`AchtDamenProblem`, `Hanoi-Turm` oder `Rekursion-Python`).
 4. Führe das Python-Skript aus:
