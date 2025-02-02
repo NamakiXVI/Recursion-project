@@ -121,7 +121,7 @@ Das Projekt ist auf GitHub verfügbar: [Recursion Project Repository](https://gi
 ---
 
 ## Kontakt
-Bei Fragen oder Feedback kannst du uns gerne kontaktieren:
+Bei Fragen oder so kannst du uns gerne kontaktieren:
 - Philipp Nguyen: [GitHub](https://github.com/NamakiXVI)
 - Morten Böhne: [GitHub](https://github.com/HaiTsung)
 
